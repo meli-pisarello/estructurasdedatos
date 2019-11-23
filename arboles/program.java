@@ -14,8 +14,9 @@ public class program {
         arbolito.agregar("3");
         arbolito.agregar("1");
         arbolito.agregar("6");
-
-        arbolito.imprimirEnAnchura();
+        // cuando se trata de nodos alfanuméricos, el método agregar no funciona bien
+        arbolito.imprimirPreOrder();
+     
         System.out.println("--------------------------------");
         NodoABinario mas = new NodoABinario("+");
 
