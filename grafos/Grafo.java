@@ -67,28 +67,63 @@ public class Grafo {
         for(i=0 ;i<vertices.length;i++){
             flag[i]=0;
             this.distancias[i]=this.matrizPesos[0][i]; // tomando como el estado inicial al nodo ubicado el 0
-        } //a esta altura i tiene 4
+        } // this.distancias[] = [0, 2, 4, 3, 999, 999, 999, 999, 999, 999]
 
         c=2;
 
         while(c<=vertices.length){
 
             minimo=99; // hv
-            //se aranca en 1 suponiendo que el 0es el estado inicial
+
+            //se arranca en 1 suponiendo que el 0 es el estado inicial
             for(k=1;k<vertices.length;k++){
-
-                if(this.distancias[k]<minimo && flag[k]!=1) {
-                    minimo=this.distancias[k];
-                    //guardamos donde esta la posicion del menor
-                    minpos=k;
+                if(this.distancias[k]<minimo && flag[k]!=1) { // primer vuelva: 2 < 99? si && 0 != 1? si
+                    // guardamos el valor del menor
+                    minimo=this.distancias[k]; // minimo = 2
+                    // guardamos donde esta la posicion del menor
+                    minpos=k; // minpos = 1
                 }
+                // c2: minimo = 2, minpos = 1
+                // c3: minimo = 3, minpos = 3
+                // c4: minimo = 4, minpos = 2
             }
-
+            // marcamos esta posición como visitada
             flag[minpos]=1;
             c++;
+            // this.distancias[] = [0, 2, 4, 3, 999, 999, 999, 999, 999, 999]
+            // flag[] = [0,1,1,1,0,0,0,0,0,0]
             for(k=1;k<vertices.length;k++){
+                // c2 (k=1): 2 + 0 < 2? no && flag != 1? no
+                // c2 (k=2): 2 + 999 < 4? no && flag != 1? si
+                // c2 (k=3): 2 + 999 < 3? no && flag != 1? si
+                // c2 (k=4): 2 + 7 < 0? no && flag != 1? si
+                // c3 (k=1): 3 + 999 < 2? no && flag != 1? no
+                // c3 (k=2): 3 + 999 < 4? no && flag != 1? si
+                // c3 (k=3): 3 + 0 < 3? no && flag != 1? no
+                // c3 (k=4): 3 + 4 < 999? si && flag != 1? si <---- entra
+                // c3 (k=5): 3 + 1 < 999? si && flag != 1? si <---- entra
+                // c3 (k=6): 3 + 5 < 999? si && flag != 1? si <---- entra
+                // c4 (k=1): 4 + 999 < 4? no && flag != 1? no
+                // c4 (k=2): 4 + 0 < 4? no && flag != 1? no
+                // c4 (k=3): 4 + 999 < 999? no && flag != 1? no
+                // c4 (k=4): 4 + 3 < 999? si && flag != 1? si <---- entra
                 if(this.distancias[minpos]+this.matrizPesos[minpos][k] <  this.distancias[k] && flag[k]!=1 )
                     this.distancias[k]=this.distancias[minpos]+this.matrizPesos[minpos][k];
+                // this.distancias[4] = this.distancias[3] + this.matrizPesos[3][4]
+                // this.distancias[4] = 3 + 4 = 7
+                // this.distancias[4] = [0, 2, 4, 3, 7, 999, 999, 999, 999, 999]
+
+                // this.distancias[5] = this.distancias[3] + this.matrizPesos[3][5]
+                // this.distancias[5] = 3 + 1 = 4
+                // this.distancias[5] = [0, 2, 4, 3, 7, 4, 999, 999, 999, 999]
+
+                // this.distancias[6] = this.distancias[3] + this.matrizPesos[3][6]
+                // this.distancias[6] = 3 + 5 = 8
+                // this.distancias[6] = [0, 2, 4, 3, 7, 4, 8, 999, 999, 999]
+
+                // this.distancias[4] = this.distancias[2] + this.matrizPesos[2][4]
+                // this.distancias[4] = 4 + 3 = 7
+                // this.distancias[4] = [0, 2, 4, 3, 7, 4, 8, 999, 999, 999]
             }
 
         }
