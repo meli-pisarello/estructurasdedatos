@@ -57,7 +57,7 @@ public class Grafo {
         return resultado;
     }
 
-    public void calcularDijkstra(){
+    public void calcularDijkstra(int o){
         int flag[] = new int[vertices.length];
         int i,minpos=1,k,c,minimo;
 
@@ -65,18 +65,21 @@ public class Grafo {
         //entonces esto indica que estoy parada en el estado inicial y tengo todas las distancias desde ese punto
 
         for(i=0 ;i<vertices.length;i++){
-            flag[i]=0;
-            this.distancias[i]=this.matrizPesos[0][i]; // tomando como el estado inicial al nodo ubicado el 0
+            if (i == o)
+                flag[i]=1;
+            else
+                flag[i]=0;
+            this.distancias[i]=this.matrizPesos[o][i]; // tomando como el estado inicial al nodo ubicado el 0
         } // this.distancias[] = [0, 2, 4, 3, 999, 999, 999, 999, 999, 999]
 
-        c=2;
+        c=1;
 
         while(c<=vertices.length){
 
             minimo=99; // hv
 
             //se arranca en 1 suponiendo que el 0 es el estado inicial
-            for(k=1;k<vertices.length;k++){
+            for(k=0;k<vertices.length;k++){
                 if(this.distancias[k]<minimo && flag[k]!=1) { // primer vuelva: 2 < 99? si && 0 != 1? si
                     // guardamos el valor del menor
                     minimo=this.distancias[k]; // minimo = 2
@@ -92,7 +95,7 @@ public class Grafo {
             c++;
             // this.distancias[] = [0, 2, 4, 3, 999, 999, 999, 999, 999, 999]
             // flag[] = [0,1,1,1,0,0,0,0,0,0]
-            for(k=1;k<vertices.length;k++){
+            for(k=0;k<vertices.length;k++){
                 // c2 (k=1): 2 + 0 < 2? no && flag != 1? no
                 // c2 (k=2): 2 + 999 < 4? no && flag != 1? si
                 // c2 (k=3): 2 + 999 < 3? no && flag != 1? si

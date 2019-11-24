@@ -36,6 +36,6 @@ public class program {
         System.out.println("---------------------------");
         g.imprimir();
         System.out.println("---------------------------");
-        g.calcularDijkstra();
+        g.calcularDijkstra(0);
     }
 }
